@@ -50,6 +50,9 @@ class NaverNewsScraper(NewsScraper):
 
             current_scarp_max_cnt += 1
             scrap_start_index += 100
+            print(query + " NAVER CALL : " + str(current_scarp_max_cnt))
+            if scrap_start_index > 1000:
+                break
 
         return self.parse_response(scrap_result)
 
