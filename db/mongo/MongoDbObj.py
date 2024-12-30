@@ -4,7 +4,6 @@ from pymongo import MongoClient
 
 from db.AbstractDBObj import AbstractDBObj
 from db.DBProperty import DBProperty
-from db.mongo.MongoDBProperty import MongoDBProperty
 
 
 class MongoDbObj(AbstractDBObj, ABC):
@@ -34,7 +33,9 @@ class MongoDbObj(AbstractDBObj, ABC):
         return self.connection
 
 
-if __name__ == '__main__':
+
+
+# if __name__ == '__main__':
     # property = MongoDBProperty(
     #     host=['haru-stock-mongo-master', 'haru-stock-mongo-replica1', 'haru-stock-mongo-replica2'],
     #     port=[27027, 27028, 27029],
@@ -42,25 +43,25 @@ if __name__ == '__main__':
     #     passwd='haru',
     #     db='haru_stock')
 
-    property = MongoDBProperty(
-        host='127.0.0.1',
-        port=27027,
-        user='haru',
-        passwd='haru',
-        db='haru_stock')
-    obj = MongoDbObj(property)
-    mongo = obj.connect()
-    dbs = mongo.get_default_database()
-
-    collection = dbs["g2"]
-    collection.insert_many([
-        {"name": "Alice", "age": 25, "city": "Seoul"},
-        {"name": "Bob", "age": 30, "city": "Busan"},
-        {"name": "Charlie", "age": 35, "city": "Incheon"},
-    ])
-
-    for d in collection.find():
-        print(d)
+    # property = MongoDBProperty(
+    #     host='127.0.0.1',
+    #     port=27027,
+    #     user='haru',
+    #     passwd='haru',
+    #     db='haru_stock')
+    # obj = MongoDbObj(property)
+    # mongo = obj.connect()
+    # dbs = mongo.get_default_database()
+    #
+    # collection = dbs["g2"]
+    # collection.insert_many([
+    #     {"name": "Alice", "age": 25, "city": "Seoul"},
+    #     {"name": "Bob", "age": 30, "city": "Busan"},
+    #     {"name": "Charlie", "age": 35, "city": "Incheon"},
+    # ])
+    #
+    # for d in collection.find():
+    #     print(d)
 
     # ReplicaSet URI
     # uri = "mongodb://haru:haru@localhost:27027/haru_stock?directConnection=true"

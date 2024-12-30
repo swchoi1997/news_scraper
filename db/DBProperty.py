@@ -1,4 +1,5 @@
 from abc import abstractmethod, ABC
+from typing import Any
 
 from db.DBType import DBType
 
@@ -8,7 +9,7 @@ class DBProperty(ABC):
         self.db_type = db_type
 
     @abstractmethod
-    def connectionInfo(self) -> str:
+    def connectionInfo(self) -> Any:
         pass
 
     def getDBType(self):

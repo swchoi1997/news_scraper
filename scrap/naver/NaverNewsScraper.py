@@ -9,13 +9,15 @@ from config.NcpConfig import NcpConfig
 from config.NcpNewsParams import NcpNewsParams
 from scrap.NewsItemContainer import NewsItemContainer
 from scrap.NewsScraper import NewsScraper
+from scrap.NewsType import NewsType
 from scrap.naver.NaverNewsItem import NaverNewsItem
 
 
 class NaverNewsScraper(NewsScraper):
     def __init__(self):
-        self.ncpConfig: NcpConfig = NcpConfig()
-        self.scrap_max_cnt: int = self.ncpConfig.ncp_properties.getMaxScrapCount()
+        super().__init__(NewsType.NAVER)
+        self.ncpConfig: NcpConfig = NcpConfig()  # NCP 요청에 대한 config 정보
+        self.scrap_max_cnt: int = self.ncpConfig.ncp_properties.getMaxScrapCount()  # NCP 뉴스의 1회 최대 요청가는 횟수
 
     def fetch_news(
             self,
@@ -31,12 +33,14 @@ class NaverNewsScraper(NewsScraper):
 
         # 스크랩 을 가능할떄 까지 진행
         current_scarp_max_cnt = 0
-        # 스크랩 시작 지점 선언
+        # 스크랩 시작 지점
         scrap_start_index = 1
         while current_scarp_max_cnt < self.scrap_max_cnt:
             # request 요청 생성
             request: urllib.request.Request = self.ncpConfig.getNcpRequest(NcpNewsParams(query, scrap_start_index))
             response: http.client.HTTPResponse = urllib.request.urlopen(request)
+
+            #  Http Status Code가 200 이 아니면 break
             if HTTPStatus.OK != response.getcode():
                 break
 
@@ -101,3 +105,8 @@ class NaverNewsScraper(NewsScraper):
 
 
         return True
+
+    def getScrapedNews(self) -> List[Dict[Any, Any]]:
+        return self.scrap_news
+
+
